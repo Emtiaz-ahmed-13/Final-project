@@ -1,3 +1,5 @@
 
 bistro-boss-restaurant-resources/
 .DS_Store
+backend/node_modules/.package-lock.json
+backend/.env
