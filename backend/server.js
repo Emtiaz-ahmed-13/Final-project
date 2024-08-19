@@ -22,10 +22,37 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
+
+    //menu collection 
+    const menuCollection = client.db("bistroDB").collection("menu");
+    const reviewCollection = client.db("bistroDB").collection("reviews");
+
+    app.get('/menu',async(req,res)=>{
+        const result=await menuCollection.find().toArray();
+        res.send(result);
+    })
+    //review collection 
+    app.get('/reviews',async(req,res)=>{
+      const result=await reviewCollection.find().toArray();
+      res.send(result);
+  })
+
+    
+
+
+
+
+
+
+
+
+
+
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
-    await client.close();
+    // await client.close();
   }
 }
 
