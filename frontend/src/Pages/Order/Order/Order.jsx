@@ -8,17 +8,16 @@ import Cover from "../../Shared/Cover/Cover";
 import OrderTab from "../OrderTab/OrderTab";
 
 const Order = () => {
-    const categories=['salad','pizza','soup','dessert','drink'];
+    const categories = ['salad', 'pizza', 'soup', 'dessert', 'drink'];
 
-    const [category] = useParams();
-    const intialIndex=categories.indexOf(category);
+    // Destructure category from useParams
+    const { category } = useParams(); // Ensure this line correctly destructures the params
 
+    const initialIndex = categories.indexOf(category);
 
+    const [tabIndex, setTabIndex] = useState(initialIndex);
 
-    const [tabIndex, setTabIndex] = useState(0);
-
-  
-    const [menu] =UseMenu();
+    const [menu] = UseMenu();
 
     const desserts = menu.filter(item => item.category === 'dessert');
     const soup = menu.filter(item => item.category === 'soup');
@@ -26,40 +25,38 @@ const Order = () => {
     const pizza = menu.filter(item => item.category === 'pizza');
     const drinks = menu.filter(item => item.category === 'drink');
 
- 
-
-  return (
-    <div>
-    <Helmet>
-        <title>Bistro Boss | Order Food</title>
-    </Helmet>
-    <Cover img={orderCoverImg} title="Order Food"></Cover>
-    <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-        <TabList>
-            <Tab>Salad</Tab>
-            <Tab>Pizza</Tab>
-            <Tab>Soup</Tab>
-            <Tab>Dessert</Tab>
-            <Tab>Drinks</Tab>
-        </TabList>
-        <TabPanel>
-            <OrderTab items={salad}></OrderTab>
-        </TabPanel>
-        <TabPanel>
-            <OrderTab items={pizza}></OrderTab>
-        </TabPanel>
-        <TabPanel>
-            <OrderTab items={soup}></OrderTab>
-        </TabPanel>
-        <TabPanel>
-            <OrderTab items={desserts}></OrderTab>
-        </TabPanel>
-        <TabPanel>
-            <OrderTab items={drinks}></OrderTab>
-        </TabPanel>
-    </Tabs>
-</div>
-  );
+    return (
+        <div>
+            <Helmet>
+                <title>Bistro Boss | Order Food</title>
+            </Helmet>
+            <Cover img={orderCoverImg} title="Order Food"></Cover>
+            <Tabs defaultIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+                <TabList>
+                    <Tab>Salad</Tab>
+                    <Tab>Pizza</Tab>
+                    <Tab>Soup</Tab>
+                    <Tab>Dessert</Tab>
+                    <Tab>Drinks</Tab>
+                </TabList>
+                <TabPanel>
+                    <OrderTab items={salad}></OrderTab>
+                </TabPanel>
+                <TabPanel>
+                    <OrderTab items={pizza}></OrderTab>
+                </TabPanel>
+                <TabPanel>
+                    <OrderTab items={soup}></OrderTab>
+                </TabPanel>
+                <TabPanel>
+                    <OrderTab items={desserts}></OrderTab>
+                </TabPanel>
+                <TabPanel>
+                    <OrderTab items={drinks}></OrderTab>
+                </TabPanel>
+            </Tabs>
+        </div>
+    );
 };
 
 export default Order;
