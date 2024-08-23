@@ -4,9 +4,12 @@ import Footer from "../Pages/Shared/Footer/Footer";
 import Header from "../Pages/Shared/Header/Header";
 
 const Main = () => {
-    const location =useLocation();
+    const location = useLocation();
     console.log(location);
-    const noHeaderFooter=location.pathname.includes('login')
+    
+    const noHeaderFooter = location.pathname.includes('login') ||
+                           location.pathname.includes('signup');
+    
     return (
         <div>
             {noHeaderFooter || <Header />}
