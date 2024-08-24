@@ -1,22 +1,35 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
-import {LoadCanvasTemplate,loadCaptchaEnginge,validateCaptcha,} from "react-simple-captcha";
+import { Link, useLocation, useNavigate, useNavigation } from "react-router-dom";
+import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from "react-simple-captcha";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);  
+  const nagigate= useNavigation();
+  const location = useLocation();
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  
+  const navigate = useNavigate(); 
 
+  const from = location.state?.from?.pathname || "/";
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-    });
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log("This is a error while signIn",error);
+        
+      });
   };
 
   const handleValidateCaptcha = (event) => {
@@ -30,8 +43,6 @@ const Login = () => {
       alert("Invalid Captcha! Please try again.");
     }
   };
-
-  const {} = useContext(AuthContext);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
